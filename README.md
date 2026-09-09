@@ -12,7 +12,7 @@ See the [Databricks provider documentation](https://registry.terraform.io/provid
 ```hcl
 module "workspace_binding" {
   source  = "536tech/workspace-binding/databricks"
-  version = "0.1.0"
+  version = "1.0.0"
 
   workspace_id   = 123456789
   securable_name = "sales"
