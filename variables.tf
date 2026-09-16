@@ -23,21 +23,19 @@ variable "securable_name" {
 variable "securable_type" {
   description = "Unity Catalog securable type."
   type        = string
-  nullable    = false
 
   validation {
-    condition     = contains(["catalog", "storage_credential", "external_location"], var.securable_type)
-    error_message = "securable_type must be catalog, storage_credential, or external_location."
+    condition     = var.securable_type == null ? true : contains(["catalog", "storage_credential", "external_location", "credential"], var.securable_type)
+    error_message = "securable_type must be catalog, storage_credential, external_location, or credential."
   }
 }
 
 variable "binding_type" {
   description = "Read-only or read-write binding type."
   type        = string
-  nullable    = false
 
   validation {
-    condition     = contains(["BINDING_TYPE_READ_ONLY", "BINDING_TYPE_READ_WRITE"], var.binding_type)
+    condition     = var.binding_type == null ? true : contains(["BINDING_TYPE_READ_ONLY", "BINDING_TYPE_READ_WRITE"], var.binding_type)
     error_message = "binding_type must be BINDING_TYPE_READ_ONLY or BINDING_TYPE_READ_WRITE."
   }
 }

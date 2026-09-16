@@ -1,7 +1,7 @@
 resource "databricks_workspace_binding" "this" {
   lifecycle {
     precondition {
-      condition     = var.securable_type == "catalog" || var.binding_type == "BINDING_TYPE_READ_WRITE"
+      condition     = coalesce(var.securable_type, "catalog") == "catalog" || coalesce(var.binding_type, "BINDING_TYPE_READ_WRITE") == "BINDING_TYPE_READ_WRITE"
       error_message = "Only a catalog can have a read-only workspace binding."
     }
   }

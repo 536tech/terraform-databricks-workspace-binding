@@ -41,3 +41,25 @@ run "reject_fractional_id" {
   }
   expect_failures = [var.workspace_id]
 }
+
+run "accept_provider_defaults" {
+  command = plan
+  variables {
+    securable_type = null
+    binding_type   = null
+  }
+}
+
+run "accept_service_credential_binding" {
+  command = plan
+  variables { securable_type = "credential" }
+}
+
+run "reject_read_only_service_credential" {
+  command = plan
+  variables {
+    securable_type = "credential"
+    binding_type   = "BINDING_TYPE_READ_ONLY"
+  }
+  expect_failures = [databricks_workspace_binding.this]
+}

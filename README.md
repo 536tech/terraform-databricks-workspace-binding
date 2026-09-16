@@ -57,6 +57,9 @@ The workspace pattern module checks the complete DataTF contract and its integra
 
 The module rejects blank required names and invalid access inputs during the plan.
 Cross-input preconditions preserve the Terraform 1.5 minimum and existing resource addresses.
+The standalone module also accepts service credential bindings (`securable_type = "credential"`).
+DataTF exports only its documented catalog, storage credential, and external location bindings.
+Null remains valid for inputs where the provider supplies a default.
 Provider and API checks still apply. These checks do not prove complete permission visibility.
 
 <!-- BEGIN_TF_DOCS -->
