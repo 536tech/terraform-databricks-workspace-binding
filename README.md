@@ -12,7 +12,7 @@ See the [Databricks provider documentation](https://registry.terraform.io/provid
 ```hcl
 module "workspace_binding" {
   source  = "536tech/workspace-binding/databricks"
-  version = "1.0.0"
+  version = "1.0.1"
 
   workspace_id   = 123456789
   securable_name = "sales"
@@ -52,6 +52,15 @@ The workspace pattern module checks the complete DataTF contract and its integra
 ## License
 
 [Apache-2.0](LICENSE).
+
+## Input safeguards
+
+The module rejects blank required names and invalid access inputs during the plan.
+Cross-input preconditions preserve the Terraform 1.5 minimum and existing resource addresses.
+The standalone module also accepts service credential bindings (`securable_type = "credential"`).
+DataTF exports only its documented catalog, storage credential, and external location bindings.
+Null remains valid for inputs where the provider supplies a default.
+Provider and API checks still apply. These checks do not prove complete permission visibility.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

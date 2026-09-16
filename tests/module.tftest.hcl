@@ -16,3 +16,50 @@ run "documented_example" {
     error_message = "The resource must preserve its configured name."
   }
 }
+
+run "reject_blank_name" {
+  command = plan
+  variables {
+    securable_name = "  "
+  }
+  expect_failures = [var.securable_name]
+}
+
+run "reject_read_only_storage" {
+  command = plan
+  variables {
+    securable_type = "storage_credential"
+    binding_type   = "BINDING_TYPE_READ_ONLY"
+  }
+  expect_failures = [databricks_workspace_binding.this]
+}
+
+run "reject_fractional_id" {
+  command = plan
+  variables {
+    workspace_id = 1.5
+  }
+  expect_failures = [var.workspace_id]
+}
+
+run "accept_provider_defaults" {
+  command = plan
+  variables {
+    securable_type = null
+    binding_type   = null
+  }
+}
+
+run "accept_service_credential_binding" {
+  command = plan
+  variables { securable_type = "credential" }
+}
+
+run "reject_read_only_service_credential" {
+  command = plan
+  variables {
+    securable_type = "credential"
+    binding_type   = "BINDING_TYPE_READ_ONLY"
+  }
+  expect_failures = [databricks_workspace_binding.this]
+}
